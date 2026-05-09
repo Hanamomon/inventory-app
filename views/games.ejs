@@ -6,20 +6,22 @@
   <title>Games</title>
 </head>
 <body>
-  <a href="/games/add">Add</a>
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Genre</th>
-        <th>Developer</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% games.forEach(game => { %>
-        <%- include('partials/gameEntry', { game: game }) %>
-      <% }) %>
-    </tbody>
-  </table>
+  <main>
+    <a href="/games/add">Add</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Genre</th>
+          <th>Developer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% games.forEach(game => { %>
+          <%- include('partials/gameEntry', { game: game }) %>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
 </body>
 </html>
