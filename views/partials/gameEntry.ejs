@@ -1,0 +1,15 @@
+<tr>
+  <td>
+    <a href="/games/<%= game.id %>"><%= game.name %></a>
+  </td>
+  <% if (locals.game.genre) { %>
+    <td>
+      <a href="/genres/<%= game.genre %>"><%= game.genre %></a>
+    </td>
+  <% } %>
+  <% if (locals.game.dev_id) { %>
+    <td>
+      <a href="/developers/<%= game.dev_id %>"><%= game.developer %></a>
+    </td>
+  <% } %>
+</tr>
