@@ -14,11 +14,15 @@
     </div>
     <div>
       <h3>Genres</h3>
-      <a href="/genres/<%= game.genre %>"><%= game.genre %></a>
+      <% game.genres.forEach(genre => { %>
+        <a href="/genres/<%= genre %>"><%= genre %></a>
+      <% }) %>
     </div>
     <div>
       <h3>Developers</h3>
-      <a href="/developers/<%= game.dev_id %>"><%= game.developer %></a>
+      <% game.developers.forEach(developer => { %>
+        <a href="/developers/<%= developer.id %>"><%= developer.name %></a>
+      <% }) %>
     </div>
   </main>
 </body>

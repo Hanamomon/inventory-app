@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= developer.name %></title>
+</head>
+<body>
+  <main>
+    <h2><%= developer.name %></h2>
+    <div>
+      <h3>Description</h3>
+      <p><%= developer.description %></p>
+    </div>
+    <div>
+      <h3>Founded</h3>
+      <p><%= developer.founded %></p>
+    </div>
+    <div>
+      <h3>Country</h3>
+      <p><%= developer.country %></p>
+    </div>
+    <div>
+      <a href="/developers/<%= developer.id %>/games"><h3>Games</h3></a>
+      <p><%= developer.developed_count %></p>
+    </div>
+  </main>
+</body>
+</html>

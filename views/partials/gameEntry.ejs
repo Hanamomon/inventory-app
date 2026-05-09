@@ -2,14 +2,18 @@
   <td>
     <a href="/games/<%= game.id %>"><%= game.name %></a>
   </td>
-  <% if (locals.game.genre) { %>
+  <% if (locals.game.genres) { %>
     <td>
-      <a href="/genres/<%= game.genre %>"><%= game.genre %></a>
+      <% game.genres.forEach(genre => { %>
+        <a href="/genres/<%= genre %>"><%= genre %></a>
+      <% }) %>
     </td>
   <% } %>
-  <% if (locals.game.dev_id) { %>
+  <% if (locals.game.developers) { %>
     <td>
-      <a href="/developers/<%= game.dev_id %>"><%= game.developer %></a>
+      <% game.developers.forEach(developer => { %>
+        <a href="/developers/<%= developer.id %>"><%= developer.name %></a>
+      <% }) %>
     </td>
   <% } %>
 </tr>
