@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Game</title>
+</head>
+<body>
+  <form method="POST" action="/games/add">
+    <label for="name">
+      Title:
+      <input name="name" id="name" type="text" required>
+    </label>
+    <label for="description">
+      Description:
+      <textarea name="description" id="description"></textarea>
+    </label>
+    <select multiple name="genres" id="genres" required>
+      <% genres.forEach(genre => { %>
+        <option value="<%= genre.id %>"><%= genre.name %></option>
+      <% }) %>
+    </select>
+    <select multiple name="developers" id="developers" required>
+      <% developers.forEach(developer => { %>
+        <option value="<%= developer.id %>"><%= developer.name %></option>
+      <% }) %>
+    </select>
+    <button type="submit" >Add</button>
+  </form>
+</body>
+</html>

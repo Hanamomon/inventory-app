@@ -32,6 +32,31 @@ async function getGameById(id) {
   return rows;
 }
 
+async function postGame(name, description, genres, developers) {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    const { rows } = await client.query(`INSERT INTO games (name, description) VALUES ($1, $2) RETURNING id;`, [name, description]);
+    const gameId = rows[0].id;
+    await Promise.all(
+      genres.map(genreId => client.query(`INSERT INTO games_genres (game_id, genre_id) VALUES ($1, $2)`, [gameId, genreId]))
+    );
+
+    await Promise.all(
+      developers.map(developerId => client.query(`INSERT INTO games_developers (game_id, developer_id) VALUES ($1, $2)`, [gameId, developerId]))
+    );
+
+    await client.query('COMMIT');
+  } catch (e) {
+    await client.query('ROLLBACK');
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
 async function getAllGenres() {
   const { rows } = await pool.query('SELECT * FROM genres');
   return rows;
@@ -92,5 +117,6 @@ module.exports = {
   getGamesByDeveloper,
   getAllGenres,
   getAllDevelopers,
-  getDeveloperById
+  getDeveloperById,
+  postGame
 };
