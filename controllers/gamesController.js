@@ -1,4 +1,4 @@
-const { getAllGames, getGameById, getAllGenres, getAllDevelopers, postGame } = require('../db/queries');
+const { getAllGames, getGameById, getAllGenres, getAllDevelopers, postGame, updateGame } = require('../db/queries');
 
 async function gamesGetAll(req, res) {
   const games = await getAllGames();
@@ -25,9 +25,26 @@ async function gamesPostAdd(req, res) {
   res.redirect('/games');
 }
 
+async function gamesGetUpdate(req, res) {
+  const { id } = req.params;
+  const results = await Promise.all([getGameById(id), getAllGenres(), getAllDevelopers()]);
+  res.render('update/updateGame', { game: results[0][0], genreList: results[1], developerList: results[2] });
+}
+
+async function gamesPostUpdate(req, res) {
+  const { id } = req.params;
+  const data = req.body;
+  const genres = [...data.genres];
+  const developers = [...data.developers];
+  await updateGame(data.name, data.description, genres, developers, id);
+  res.redirect('/games');
+}
+
 module.exports = {
   gamesGetAll,
   gamesGetGame,
   gamesGetAdd,
-  gamesPostAdd
+  gamesPostAdd,
+  gamesGetUpdate,
+  gamesPostUpdate
 };

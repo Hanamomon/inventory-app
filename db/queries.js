@@ -57,6 +57,45 @@ async function postGame(name, description, genres, developers) {
   }
 };
 
+async function updateGame(name, description, genres, developers, id) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    
+    await client.query(`
+      UPDATE games
+        SET name = $1,
+            description = $2
+        WHERE games.id = $3;
+    `, [name, description, id]);
+
+    await client.query(`
+      DELETE FROM games_genres WHERE game_id = $1
+      `, [id]);
+    await Promise.all(
+      genres.map(genreId => client.query(`
+        INSERT INTO games_genres (game_id, genre_id) VALUES ($1, $2);
+      `, [id, genreId]))
+    );
+
+    await client.query(`
+      DELETE FROM games_developers WHERE game_id = $1
+      `, [id]);
+    await Promise.all(
+      developers.map(developerId => client.query(`
+        INSERT INTO games_developers (game_id, developer_id) VALUES ($1, $2);
+      `, [id, developerId]))
+    );
+
+    await client.query('COMMIT');
+  } catch (e) {
+    await client.query('ROLLBACK');
+    throw e;
+  } finally {
+    client.release();
+  }
+}
+
 async function getAllGenres() {
   const { rows } = await pool.query('SELECT * FROM genres');
   return rows;
@@ -138,5 +177,6 @@ module.exports = {
   postGame,
   postGenre,
   postDeveloper,
-  updateDeveloper
+  updateDeveloper,
+  updateGame
 };

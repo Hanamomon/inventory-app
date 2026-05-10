@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Game</title>
+</head>
+<body>
+  <form method="POST" action="/games/<%= game.id %>/update">
+    <label for="name">
+      Title:
+      <input name="name" id="name" type="text" value="<%= game.name %>" required>
+    </label>
+    <label for="description">
+      Description:
+      <textarea name="description" id="description"><%= game.description %></textarea>
+    </label>
+    <label for="genres">Genre(s):</label>
+    <select multiple name="genres" id="genres" required>
+      <% genreList.forEach(genre => { %>
+        <option value="<%= genre.id %>" <%= game.genres.includes(genre.name) ? 'selected' : '' %>><%= genre.name %></option>
+      <% }) %>
+    </select>
+    <label for="developers">Developer(s):</label>
+    <select multiple name="developers" id="developers" required>
+      <% developerList.forEach(developer => { %>
+        <option value="<%= developer.id %>" <%= game.developers.find((dev) => dev.id === developer.id) ? 'selected' : '' %>><%= developer.name %></option>
+      <% }) %>
+    </select>
+    <button type="submit">Update</button>
+  </form>
+</body>
+</html>
