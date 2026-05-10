@@ -61,6 +61,9 @@ async function getAllGenres() {
   const { rows } = await pool.query('SELECT * FROM genres');
   return rows;
 };
+async function postGenre(name) {
+  await pool.query('INSERT INTO genres (name) VALUES ($1);', [name]);
+}
 async function getGamesByGenre(genre) {
   const { rows } = await pool.query(`
     SELECT g.name,
@@ -81,6 +84,10 @@ async function getAllDevelopers() {
   const { rows } = await pool.query('SELECT * FROM developers');
   return rows;
 };
+async function postDeveloper(name, description, country, founded) {
+  await pool.query('INSERT INTO developers (name, description, country, founded) VALUES ($1, $2, $3, $4)',
+    [name, description, country, founded]);
+}
 async function getDeveloperById(id) {
   const { rows } = await pool.query(`
     SELECT *,
@@ -118,5 +125,7 @@ module.exports = {
   getAllGenres,
   getAllDevelopers,
   getDeveloperById,
-  postGame
+  postGame,
+  postGenre,
+  postDeveloper
 };

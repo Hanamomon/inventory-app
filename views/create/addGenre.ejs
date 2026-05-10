@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Genre</title>
+</head>
+<body>
+  <form method="POST" action="/genres/add">
+    <label for="name">
+      Genre:
+      <input name="name" id="name" type="text" required>
+    </label>
+    <button type="submit" >Add</button>
+  </form>
+  <div>
+    <h2>List of genres:</h2>
+    <% genres.forEach(genre => { %>
+      <span><%= genre.name %>,</span>
+    <% }) %>
+  </div>
+</body>
+</html>

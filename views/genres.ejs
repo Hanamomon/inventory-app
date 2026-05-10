@@ -6,17 +6,20 @@
   <title>Genres</title>
 </head>
 <body>
-  <table>
-    <thead>
-      <tr>
-        <th>Genre</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% genres.forEach(genre => { %>
-        <%- include('partials/genreEntry', { genre: genre }) %>
-      <% }) %>
-    </tbody>
-  </table>
+  <main>
+    <a href="/genres/add">Add</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Genre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% genres.forEach(genre => { %>
+          <%- include('partials/genreEntry', { genre: genre }) %>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
 </body>
 </html>

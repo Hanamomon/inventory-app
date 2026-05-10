@@ -6,17 +6,21 @@
   <title>Developers</title>
 </head>
 <body>
-  <table>
-    <thead>
-      <tr>
-        <th>Developer</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% developers.forEach(developer => { %>
-        <%- include('partials/developerEntry', { developer: developer }) %>
-      <% }) %>
-    </tbody>
-  </table>
+  <main>
+    <a href="/developers/add">Add</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Developer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% developers.forEach(developer => { %>
+          <%- include('partials/developerEntry', { developer: developer }) %>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+
 </body>
 </html>

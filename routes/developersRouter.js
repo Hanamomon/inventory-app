@@ -3,6 +3,8 @@ const developersRouter = Router();
 const developersController = require('../controllers/developersController');
 
 developersRouter.get('/', developersController.developersGetAll);
+developersRouter.get('/add', developersController.developersGetAdd);
+developersRouter.post('/add', developersController.developersPostAdd);
 developersRouter.get('/:id', developersController.developersGetDeveloper);
 developersRouter.get('/:id/games', developersController.developersGetGames);
 

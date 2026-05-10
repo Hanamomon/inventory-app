@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Developer</title>
+</head>
+<body>
+  <form method="POST" action="/developers/add">
+    <label for="name">
+      Name:
+      <input name="name" id="name" type="text" required>
+    </label>
+    <label for="description">
+      Description:
+      <textarea name="description" id="description"></textarea>
+    </label>
+    <label for="country">
+      Country:
+    </label>
+    <%- include('../partials/countriesSelect') %>
+    <label for="founded">
+      Founded:
+      <input name="founded" id="founded" type="date" required>
+    </label>
+    <button type="submit" >Add</button>
+  </form>
+</body>
+</html>
