@@ -7,7 +7,10 @@
 </head>
 <body>
   <main>
-    <h2><%= developer.name %></h2>
+    <div>
+      <h2><%= developer.name %></h2>
+      <a href="/developers/<%= developer.id %>/update">Edit</a>
+    </div>
     <div>
       <h3>Description</h3>
       <p><%= developer.description %></p>
