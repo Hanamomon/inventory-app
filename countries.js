@@ -250,6 +250,12 @@ const countryCodes = {
   "ZWE": "Zimbabwe"
 };
 
-const countries = new Map(Object.entries(countryCodes));
+const countriesArray = Object.entries(countryCodes);
+const countriesFromCodes = new Map(Object.entries(countryCodes));
+const codesFromCountries = new Map(Array.from(countriesFromCodes, pair => pair.reverse()));
 
-module.exports = countries;
+module.exports = {
+  countriesArray,
+  countriesFromCodes,
+  codesFromCountries
+};

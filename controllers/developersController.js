@@ -1,5 +1,5 @@
 const { getAllDevelopers, getDeveloperById, getGamesByDeveloper, postDeveloper } = require('../db/queries');
-const countries = require('../countries');
+const { countriesFromCodes, codesFromCountries, countriesArray } = require('../countries');
 
 async function developersGetAll(req, res) {
   const developers = await getAllDevelopers();
@@ -13,13 +13,13 @@ async function developersGetDeveloper(req, res) {
 }
 
 async function developersGetAdd(req, res) {
-  res.render('create/addDeveloper');
+  res.render('create/addDeveloper', { countries: countriesArray });
 }
 
 async function developersPostAdd(req, res) {
-  const { name, description, countryCode, founded } = req.body;
-  const country = countries.get(countryCode);
-  await postDeveloper(name, description, country, founded);
+  const { name, description, country, founded } = req.body;
+  const countryFull = countriesFromCodes.get(country);
+  await postDeveloper(name, description, countryFull, founded);
   res.redirect('/developers');
 }
 
