@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Developer</title>
+</head>
+<body>
+  <form method="POST" action="/developers/<%= developer.id %>/update">
+    <label for="name">
+      Name:
+      <input name="name" id="name" type="text" value="<%= developer.name %>" required>
+    </label>
+    <label for="description">
+      Description:
+      <textarea name="description" id="description"><%= developer.description %></textarea>
+    </label>
+    <label for="country">
+      Country:
+    </label>
+    <%- include('../partials/countriesSelect', { developerCountry: developer.code }) %>
+    <label for="founded">
+      Founded:
+      <input name="founded" id="founded" type="date" value="<%= developer.founded %>" required>
+    </label>
+    <button type="submit" >Update</button>
+  </form>
+</body>
+</html>

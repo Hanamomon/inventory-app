@@ -88,6 +88,16 @@ async function postDeveloper(name, description, country, founded) {
   await pool.query('INSERT INTO developers (name, description, country, founded) VALUES ($1, $2, $3, $4)',
     [name, description, country, founded]);
 }
+async function updateDeveloper(name, description, country, founded, id) {
+  await pool.query(`
+    UPDATE developers
+    SET name = $1,
+        description = $2,
+        country = $3,
+        founded = $4
+    WHERE id = $5;
+    `, [name, description, country, founded, id]);
+}
 async function getDeveloperById(id) {
   const { rows } = await pool.query(`
     SELECT *,
@@ -127,5 +137,6 @@ module.exports = {
   getDeveloperById,
   postGame,
   postGenre,
-  postDeveloper
+  postDeveloper,
+  updateDeveloper
 };
