@@ -5,7 +5,7 @@
   <% if (locals.game.genres) { %>
     <td>
       <% game.genres.forEach(genre => { %>
-        <a href="/genres/<%= genre %>"><%= genre %></a>
+        <a href="/genres/<%= genre.id %>"><%= genre.name %></a>
       <% }) %>
     </td>
   <% } %>

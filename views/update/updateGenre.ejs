@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Genre</title>
+</head>
+<body>
+  <form method="POST" action="/genres/<%= genre.id %>/update">
+    <label for="name">
+      Genre:
+      <input name="name" id="name" type="text" value="<%= genre.name %>" required>
+    </label>
+    <label for="description">
+      Description:
+      <textarea name="description" id="description"><%= genre.description %></textarea>
+    </label>
+    <button type="submit" >Update</button>
+  </form>
+</body>
+</html>

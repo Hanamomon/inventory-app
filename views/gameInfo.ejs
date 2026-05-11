@@ -21,7 +21,7 @@
     <div>
       <h3>Genres</h3>
       <% game.genres.forEach(genre => { %>
-        <a href="/genres/<%= genre %>"><%= genre %></a>
+        <a href="/genres/<%= genre.id %>"><%= genre.name %></a>
       <% }) %>
     </div>
     <div>

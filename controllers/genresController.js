@@ -1,9 +1,15 @@
-const { getAllGenres, getGamesByGenre, postGenre } = require('../db/queries');
+const { getAllGenres, getGenreById, getGamesByGenre, postGenre, updateGenre, deleteGenre } = require('../db/queries');
 
 async function genresGetAll(req, res) {
   const genres = await getAllGenres();
   res.render('genres', { genres: genres });
 };
+
+async function genresGetGenre(req, res) {
+  const { id } = req.params;
+  const genres = await getGenreById(id);
+  res.render('genreInfo', { genre: genres[0] });
+}
 
 async function genresGetAdd(req, res) {
   const genres = await getAllGenres();
@@ -11,20 +17,43 @@ async function genresGetAdd(req, res) {
 };
 
 async function genresPostAdd(req, res) {
-  const { name } = req.body;
-  await postGenre(name);
+  const { name, description } = req.body;
+  await postGenre(name, description);
+  res.redirect('/genres');
+}
+
+async function genresGetUpdate(req, res) {
+  const { id } = req.params;
+  const genres = await getGenreById(id);
+  res.render('update/updateGenre', { genre: genres[0] });
+}
+
+async function genresPostUpdate(req, res) {
+  const { id } = req.params;
+  const { name, description } = req.body;
+  await updateGenre(name, description, id);
+  res.redirect('/genres');
+}
+
+async function genresPostDelete(req, res) {
+  const { id } = req.params;
+  await deleteGenre(id);
   res.redirect('/genres');
 }
 
 async function genresGetGames(req, res) {
-  const { name } = req.params;
-  const gamesByGenre = await getGamesByGenre(name);
-  res.render('genreGames', { title: `${name} Games`, games: gamesByGenre });
+  const { id } = req.params;
+  const gamesByGenre = await getGamesByGenre(id);
+  res.render('genreGames', { title: `Games`, games: gamesByGenre });
 }
 
 module.exports = {
   genresGetAll,
+  genresGetGenre,
   genresGetGames,
   genresGetAdd,
-  genresPostAdd
+  genresPostAdd,
+  genresGetUpdate,
+  genresPostUpdate,
+  genresPostDelete
 };
