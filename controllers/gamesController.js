@@ -1,4 +1,4 @@
-const { getAllGames, getGameById, getAllGenres, getAllDevelopers, postGame, updateGame } = require('../db/queries');
+const { getAllGames, getGameById, getAllGenres, getAllDevelopers, postGame, updateGame, deleteGame } = require('../db/queries');
 
 async function gamesGetAll(req, res) {
   const games = await getAllGames();
@@ -40,11 +40,18 @@ async function gamesPostUpdate(req, res) {
   res.redirect('/games');
 }
 
+async function gamesPostDelete(req, res) {
+  const { id } = req.params;
+  await deleteGame(id);
+  res.redirect('/games');
+}
+
 module.exports = {
   gamesGetAll,
   gamesGetGame,
   gamesGetAdd,
   gamesPostAdd,
   gamesGetUpdate,
-  gamesPostUpdate
+  gamesPostUpdate,
+  gamesPostDelete
 };
