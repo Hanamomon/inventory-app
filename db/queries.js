@@ -6,10 +6,10 @@ async function getAllGames() {
       g.id,
       JSON_AGG(DISTINCT gen.name ORDER BY gen.name) AS genres,
       JSON_AGG(DISTINCT JSONB_BUILD_OBJECT('name', d.name, 'id', d.id)) AS developers FROM games g
-        JOIN games_genres gg ON g.id = gg.game_id
-        JOIN genres gen ON gen.id = gg.genre_id
-        JOIN games_developers gd ON g.id = gd.game_id
-        JOIN developers d ON d.id = gd.developer_id
+        LEFT JOIN games_genres gg ON g.id = gg.game_id
+        LEFT JOIN genres gen ON gen.id = gg.genre_id
+        LEFT JOIN games_developers gd ON g.id = gd.game_id
+        LEFT JOIN developers d ON d.id = gd.developer_id
         GROUP BY g.id, g.name;
   `);
   return rows;
@@ -22,10 +22,10 @@ async function getGameById(id) {
       g.description,
       JSON_AGG(DISTINCT gen.name ORDER BY gen.name) AS genres,
       JSON_AGG(DISTINCT JSONB_BUILD_OBJECT('name', d.name, 'id', d.id)) AS developers FROM games g
-        JOIN games_genres gg ON g.id = gg.game_id
-        JOIN genres gen ON gen.id = gg.genre_id
-        JOIN games_developers gd ON g.id = gd.game_id
-        JOIN developers d ON d.id = gd.developer_id
+        LEFT JOIN games_genres gg ON g.id = gg.game_id
+        LEFT JOIN genres gen ON gen.id = gg.genre_id
+        LEFT JOIN games_developers gd ON g.id = gd.game_id
+        LEFT JOIN developers d ON d.id = gd.developer_id
         WHERE g.id = $1
         GROUP BY g.id, g.name;
   `, [id]);
@@ -166,6 +166,28 @@ async function getGamesByDeveloper(id) {
   return rows;
 };
 
+async function deleteDeveloperRelations(id) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    await client.query(`
+      DELETE FROM games_developers
+        WHERE game_id IN (SELECT game_id
+          FROM games_developers
+          WHERE developer_id = $1);
+    `, [id]);
+    await client.query(`DELETE FROM developers WHERE id = $1;`, [id]);
+
+    await client.query('COMMIT');
+  } catch (e) {
+    await client.query('ROLLBACK');
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
 module.exports = {
   getAllGames,
   getGameById,
@@ -178,5 +200,6 @@ module.exports = {
   postGenre,
   postDeveloper,
   updateDeveloper,
-  updateGame
+  updateGame,
+  deleteDeveloperRelations
 };

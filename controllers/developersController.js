@@ -1,4 +1,4 @@
-const { getAllDevelopers, getDeveloperById, getGamesByDeveloper, postDeveloper, updateDeveloper } = require('../db/queries');
+const { getAllDevelopers, getDeveloperById, getGamesByDeveloper, postDeveloper, updateDeveloper, deleteDeveloperRelations } = require('../db/queries');
 const { countriesFromCodes, codesFromCountries, countriesArray } = require('../countries');
 
 async function developersGetAll(req, res) {
@@ -45,6 +45,13 @@ async function developersGetGames(req, res) {
   res.render('developerGames', { title: gamesByDeveloper[0].developer, games: gamesByDeveloper });
 }
 
+async function developersPostDelete(req, res) {
+  const { id } = req.params;
+  const developerRelations = await deleteDeveloperRelations(id);
+  console.log(developerRelations)
+  res.redirect('/developers');
+}
+
 module.exports = {
   developersGetAll,
   developersGetDeveloper,
@@ -52,5 +59,6 @@ module.exports = {
   developersGetAdd,
   developersPostAdd,
   developersGetUpdate,
-  developersPostUpdate
+  developersPostUpdate,
+  developersPostDelete
 };
