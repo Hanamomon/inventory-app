@@ -184,7 +184,7 @@ async function getGamesByDeveloper(id) {
   return rows;
 };
 
-async function deleteDeveloperRelations(id) {
+async function deleteDeveloper(id) {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -219,6 +219,6 @@ module.exports = {
   postDeveloper,
   updateDeveloper,
   updateGame,
-  deleteDeveloperRelations,
+  deleteDeveloper,
   deleteGame
 };
