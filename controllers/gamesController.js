@@ -19,8 +19,8 @@ async function gamesGetAdd(req, res) {
 
 async function gamesPostAdd(req, res) {
   const data = req.body;
-  const genres = [...data.genres];
-  const developers = [...data.developers];
+  const genres = Array.isArray(data.genres) ? data.genres : [data.genres];
+  const developers = Array.isArray(data.developers) ? data.developers : [data.developers];
   await postGame(data.name, data.description, genres, developers);
   res.redirect('/games');
 }
@@ -34,8 +34,8 @@ async function gamesGetUpdate(req, res) {
 async function gamesPostUpdate(req, res) {
   const { id } = req.params;
   const data = req.body;
-  const genres = [...data.genres];
-  const developers = [...data.developers];
+  const genres = Array.isArray(data.genres) ? data.genres : [data.genres];
+  const developers = Array.isArray(data.developers) ? data.developers : [data.developers];
   await updateGame(data.name, data.description, genres, developers, id);
   res.redirect('/games');
 }
