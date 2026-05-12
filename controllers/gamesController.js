@@ -19,7 +19,19 @@ async function gamesGetAdd(req, res) {
 }
 
 async function gamesPostAdd(req, res) {
-  const data = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const genres = await getAllGenres();
+    const developers = await getAllDevelopers();
+    return res.status(400).render('create/addGame', {
+      errors: errors.array(),
+      genres,
+      developers
+    });
+  }
+
+  const data = matchedData(req);
   const genres = Array.isArray(data.genres) ? data.genres : [data.genres];
   const developers = Array.isArray(data.developers) ? data.developers : [data.developers];
   await postGame(data.name, data.description, genres, developers);
@@ -33,11 +45,23 @@ async function gamesGetUpdate(req, res) {
 }
 
 async function gamesPostUpdate(req, res) {
-  const { id } = req.params;
-  const data = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const { id } = req.params;
+    const results = await Promise.all([getGameById(id), getAllGenres(), getAllDevelopers()]);
+    return res.status(400).render('update/updateGame', {
+      errors: errors.array(),
+      game: results[0][0],
+      genreList: results[1],
+      developerList: results[2] 
+    });
+  }
+  
+  const data = matchedData(req);
   const genres = Array.isArray(data.genres) ? data.genres : [data.genres];
   const developers = Array.isArray(data.developers) ? data.developers : [data.developers];
-  await updateGame(data.name, data.description, genres, developers, id);
+  await updateGame(data.name, data.description, genres, developers, data.id);
   res.redirect('/games');
 }
 

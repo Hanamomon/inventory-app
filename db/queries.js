@@ -248,11 +248,17 @@ async function deleteDeveloper(id) {
   }
 };
 
+async function getGameByName(name) {
+  const { rows } = await pool.query(`SELECT * FROM games WHERE name = $1`, [name]);
+  return rows;
+}
+
 module.exports = {
   getAllGames,
   getGameById,
   getGamesByGenre,
   getGamesByDeveloper,
+  getGameByName,
   getAllGenres,
   getGenreById,
   getAllDevelopers,

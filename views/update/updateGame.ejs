@@ -11,27 +11,27 @@
   <main class="add-section add-game">
     <%- include('../partials/errors') %>
     <form method="POST" action="/games/<%= game.id %>/update">
-      <div>
+      <div class="game-add-name">
         <label for="name">
           Title:
         </label>
         <input name="name" id="name" type="text" value="<%= game.name %>" required>
       </div>
-      <div>
+      <div class="game-add-description">
         <label for="description">
           Description:
         </label>
         <textarea name="description" id="description" rows="10" required><%= game.description %></textarea>
       </div>
-      <div>
+      <div class="game-add-genres">
         <label for="genres">Genre(s):</label>
         <select multiple name="genres" id="genres" required>
           <% genreList.forEach(genre => { %>
-            <option value="<%= genre.id %>" <%= game.genres.includes(genre.name) ? 'selected' : '' %>><%= genre.name %></option>
+            <option value="<%= genre.id %>" <%= game.genres.find((gen) => gen.id === genre.id) ? 'selected' : '' %>><%= genre.name %></option>
           <% }) %>
         </select>
       </div>
-      <div>
+      <div class="game-add-developers">
         <label for="developers">Developer(s):</label>
         <select multiple name="developers" id="developers" required>
           <% developerList.forEach(developer => { %>
