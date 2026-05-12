@@ -296,3 +296,14 @@ a, button {
       color: var(--text-color);
   }
 }
+
+.error-list {
+  background-color: var(--button-color);
+  grid-column: 2;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  li {
+    color: var(--text-color);
+    list-style: none;
+  }
+}

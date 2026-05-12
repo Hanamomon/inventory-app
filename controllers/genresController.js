@@ -1,4 +1,5 @@
 const { getAllGenres, getGenreById, getGamesByGenre, postGenre, updateGenre, deleteGenre } = require('../db/queries');
+const { validationResult, matchedData} = require('express-validator');
 
 async function genresGetAll(req, res) {
   const genres = await getAllGenres();
@@ -17,7 +18,18 @@ async function genresGetAdd(req, res) {
 };
 
 async function genresPostAdd(req, res) {
-  const { name, description } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const genres = await getAllGenres();
+    return res.status(400).render('create/addGenre', {
+      errors: errors.array(),
+      genres
+    });
+  }
+
+  const { name, description } = matchedData(req);
+
   await postGenre(name, description);
   res.redirect('/genres');
 }
@@ -29,8 +41,19 @@ async function genresGetUpdate(req, res) {
 }
 
 async function genresPostUpdate(req, res) {
-  const { id } = req.params;
-  const { name, description } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const { id } = req.params;
+    const genres = await getGenreById(id);
+    return res.status(400).render('update/updateGenre', {
+        errors: errors.array(),
+        genre: genres[0]
+    });
+  }
+
+  const { name, description, id } = matchedData(req);
+
   await updateGenre(name, description, id);
   res.redirect('/genres');
 }

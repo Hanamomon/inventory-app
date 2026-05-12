@@ -9,6 +9,7 @@
 <body>
   <%- include('../partials/header') %>
   <main class="add-section">
+    <%- include('../partials/errors') %>
     <form method="POST" action="/developers/<%= developer.id %>/update">
       <div>
         <label for="name">
@@ -20,7 +21,7 @@
       <label for="description">
         Description:
       </label>
-      <textarea name="description" id="description" rows="10"><%= developer.description %></textarea>
+      <textarea name="description" id="description" rows="10" required><%= developer.description %></textarea>
       </div>
       <div>
         <label for="country">

@@ -1,4 +1,5 @@
 const { getAllGames, getGameById, getAllGenres, getAllDevelopers, postGame, updateGame, deleteGame } = require('../db/queries');
+const { validationResult, matchedData } = require('express-validator');
 
 async function gamesGetAll(req, res) {
   const games = await getAllGames();

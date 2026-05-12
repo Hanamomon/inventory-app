@@ -1,4 +1,4 @@
-<select name="country" id="country">
+<select name="country" id="country" required>
   <% if (locals.developerCountry) { %>
     <% countries.forEach(country => { %>
       <option value="<%= country[0] %>" <%= developerCountry === country[0] ? 'selected' : '' %>>

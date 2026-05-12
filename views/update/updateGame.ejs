@@ -9,6 +9,7 @@
 <body>
   <%- include('../partials/header') %>
   <main class="add-section add-game">
+    <%- include('../partials/errors') %>
     <form method="POST" action="/games/<%= game.id %>/update">
       <div>
         <label for="name">
@@ -20,7 +21,7 @@
         <label for="description">
           Description:
         </label>
-        <textarea name="description" id="description" rows="10"><%= game.description %></textarea>
+        <textarea name="description" id="description" rows="10" required><%= game.description %></textarea>
       </div>
       <div>
         <label for="genres">Genre(s):</label>

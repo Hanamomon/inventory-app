@@ -1,5 +1,6 @@
 const { getAllDevelopers, getDeveloperById, getGamesByDeveloper, postDeveloper, updateDeveloper, deleteDeveloper } = require('../db/queries');
 const { countriesFromCodes, codesFromCountries, countriesArray } = require('../countries');
+const { validationResult, matchedData } = require('express-validator');
 
 async function developersGetAll(req, res) {
   const developers = await getAllDevelopers();
@@ -17,8 +18,18 @@ async function developersGetAdd(req, res) {
 }
 
 async function developersPostAdd(req, res) {
-  const { name, description, country, founded } = req.body;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).render('create/addDeveloper', {
+      errors: errors.array(),
+      countries: countriesArray
+    });
+  }
+  const { name, description, country, founded } = matchedData(req);
   const countryFull = countriesFromCodes.get(country);
+
   await postDeveloper(name, description, countryFull, founded);
   res.redirect('/developers');
 }
@@ -32,8 +43,18 @@ async function developersGetUpdate(req, res) {
 }
 
 async function developersPostUpdate(req, res) {
-  const { id } = req.params;
-  const { name, description, country, founded } = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const { id } = req.params;
+    const developers = await getDeveloperById(id);
+    return res.status(400).render('update/updateDeveloper', {
+      errors: errors.array(),
+      developer: {...developers[0], code: codesFromCountries.get(developers[0].country), founded: developers[0].founded.toISOString().split('T')[0] },
+      countries: countriesArray
+    });
+  }
+  const { name, description, country, founded, id } = matchedData(req);
   const countryFull = countriesFromCodes.get(country);
   await updateDeveloper(name, description, countryFull, founded, id);
   res.redirect('/developers');

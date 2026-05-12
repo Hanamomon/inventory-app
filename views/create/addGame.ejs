@@ -9,6 +9,7 @@
 <body>
   <%- include('../partials/header') %>
   <main class="add-section add-game">
+    <%- include('../partials/errors') %>
     <form method="POST" action="/games/add">
       <div class="game-add-name">
         <label for="name">
