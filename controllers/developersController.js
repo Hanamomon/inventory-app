@@ -69,7 +69,6 @@ async function developersGetGames(req, res) {
 async function developersPostDelete(req, res) {
   const { id } = req.params;
   const developerRelations = await deleteDeveloper(id);
-  console.log(developerRelations)
   res.redirect('/developers');
 }
 

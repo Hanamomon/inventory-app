@@ -10,7 +10,6 @@ const alphannumErr = 'must contain only numbers and letters.';
 const intErr = 'must be an integer.';
 const countryErr = 'Developer country must be a valid country.';
 const dateErr = 'Founded date must be valid.';
-console.log(countriesArray)
 const validateAdd = [
   body('name').trim()
     .notEmpty().withMessage(`Developer name ${emptyErr}`).bail()
