@@ -105,6 +105,10 @@ a, button {
   color: var(--link-color);
 }
 
+tbody tr:hover {
+  background-color: var(--button-color);
+}
+
 .general-info {
   display: grid;
   grid-template-columns: minmax(1rem, 1fr) minmax(0, 1200px) minmax(1rem, 1fr);
