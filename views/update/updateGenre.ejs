@@ -4,18 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Genre</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <form method="POST" action="/genres/<%= genre.id %>/update">
-    <label for="name">
-      Genre:
-      <input name="name" id="name" type="text" value="<%= genre.name %>" required>
-    </label>
-    <label for="description">
-      Description:
-      <textarea name="description" id="description"><%= genre.description %></textarea>
-    </label>
-    <button type="submit" >Update</button>
-  </form>
+  <%- include('../partials/header') %>
+  <main class="add-section">
+    <form method="POST" action="/genres/<%= genre.id %>/update">
+      <div>
+        <label for="name">
+          Genre:
+        </label>
+        <input name="name" id="name" type="text" value="<%= genre.name %>" required>
+      </div>
+      <div>
+        <label for="description">
+          Description:
+        </label>
+        <textarea name="description" id="description" rows="10"><%= genre.description %></textarea>
+      </div>
+      <button type="submit" >Update</button>
+    </form>
+  </main>
 </body>
 </html>

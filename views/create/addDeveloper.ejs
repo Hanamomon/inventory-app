@@ -4,26 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Developer</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <form method="POST" action="/developers/add">
-    <label for="name">
-      Name:
-      <input name="name" id="name" type="text" required>
-    </label>
-    <label for="description">
-      Description:
-      <textarea name="description" id="description"></textarea>
-    </label>
-    <label for="country">
-      Country:
-    </label>
-    <%- include('../partials/countriesSelect') %>
-    <label for="founded">
-      Founded:
-      <input name="founded" id="founded" type="date" required>
-    </label>
-    <button type="submit" >Add</button>
-  </form>
+  <%- include('../partials/header') %>
+  <main class="add-section">
+    <form method="POST" action="/developers/add">
+      <div>
+        <label for="name">
+          Name:
+        </label>
+        <input name="name" id="name" type="text" required>
+      </div>
+      <div>
+        <label for="description">
+          Description:
+        </label>
+        <textarea name="description" id="description" rows="10"></textarea>
+      </div>
+      <div>
+        <label for="country">
+          Country:
+        </label>
+        <%- include('../partials/countriesSelect') %>
+      </div>
+      <div>
+        <label for="founded">
+          Founded:
+        </label>
+        <input name="founded" id="founded" type="date" required>
+      </div>
+      <button type="submit" >Add</button>
+    </form>
+  </main>
 </body>
 </html>

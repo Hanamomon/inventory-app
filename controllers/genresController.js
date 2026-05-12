@@ -44,7 +44,7 @@ async function genresPostDelete(req, res) {
 async function genresGetGames(req, res) {
   const { id } = req.params;
   const gamesByGenre = await getGamesByGenre(id);
-  res.render('genreGames', { title: `Games`, games: gamesByGenre });
+  res.render('genreGames', { title: `${gamesByGenre[0].genre} Games`, games: gamesByGenre });
 }
 
 module.exports = {

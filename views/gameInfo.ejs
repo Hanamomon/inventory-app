@@ -4,31 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= game.name %></title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <main>
-    <div>
+  <%- include('partials/header') %>
+  <main class="specific-info">
+    <div class="specific-head">
       <h2><%= game.name %></h2>
-      <a href="/games/<%= game.id %>/update">Edit</a>
+      <button><a href="/games/<%= game.id %>/update">Edit</a></button>
       <form action="/games/<%= game.id %>/delete" method="POST" style="display:inline;">
         <button type="submit" onclick="return confirm('Are you sure you want to delete this game?');">Delete</button>
       </form>
     </div>
-    <div>
-      <h3>Description</h3>
-      <p><%= game.description %></p>
-    </div>
-    <div>
-      <h3>Genres</h3>
-      <% game.genres.forEach(genre => { %>
-        <a href="/genres/<%= genre.id %>"><%= genre.name %></a>
-      <% }) %>
-    </div>
-    <div>
-      <h3>Developers</h3>
-      <% game.developers.forEach(developer => { %>
-        <a href="/developers/<%= developer.id %>"><%= developer.name %></a>
-      <% }) %>
+    <div class="game-details">
+      <div class="game-description">
+        <h3>Description</h3>
+        <p><%= game.description %></p>
+      </div>
+      <div class="game-genres">
+        <h3>Genres</h3>
+        <% game.genres.forEach(genre => { %>
+          <a href="/genres/<%= genre.id %>"><%= genre.name %></a>
+        <% }) %>
+      </div>
+      <div class="game-developers">
+        <h3>Developers</h3>
+        <% game.developers.forEach(developer => { %>
+          <a href="/developers/<%= developer.id %>"><%= developer.name %></a>
+        <% }) %>
+      </div>
     </div>
   </main>
 </body>

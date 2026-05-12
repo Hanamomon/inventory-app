@@ -4,28 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Game</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <form method="POST" action="/games/add">
-    <label for="name">
-      Title:
-      <input name="name" id="name" type="text" required>
-    </label>
-    <label for="description">
-      Description:
-      <textarea name="description" id="description"></textarea>
-    </label>
-    <select multiple name="genres" id="genres" required>
-      <% genres.forEach(genre => { %>
-        <option value="<%= genre.id %>"><%= genre.name %></option>
-      <% }) %>
-    </select>
-    <select multiple name="developers" id="developers" required>
-      <% developers.forEach(developer => { %>
-        <option value="<%= developer.id %>"><%= developer.name %></option>
-      <% }) %>
-    </select>
-    <button type="submit" >Add</button>
-  </form>
+  <%- include('../partials/header') %>
+  <main class="add-section add-game">
+    <form method="POST" action="/games/add">
+      <div class="game-add-name">
+        <label for="name">
+          Title:
+        </label>
+        <input name="name" id="name" type="text" required>
+      </div>
+      <div class="game-add-description">
+        <label for="description">
+          Description:
+        </label>
+        <textarea name="description" id="description" rows="10"></textarea>
+      </div>
+      <div class="game-add-genres">
+        <label for="genres">
+          Genre(s):
+        </label>
+        <select multiple name="genres" id="genres" required>
+          <% genres.forEach(genre => { %>
+            <option value="<%= genre.id %>"><%= genre.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="game-add-developers">
+        <label for="developers">
+          Developer(s):
+        </label>
+        <select multiple name="developers" id="developers" required>
+          <% developers.forEach(developer => { %>
+            <option value="<%= developer.id %>"><%= developer.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <button type="submit" >Add</button>
+    </form>
+  </main>
 </body>
 </html>

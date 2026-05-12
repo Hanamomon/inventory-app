@@ -42,7 +42,7 @@ async function developersPostUpdate(req, res) {
 async function developersGetGames(req, res) {
   const { id } = req.params;
   const gamesByDeveloper = await getGamesByDeveloper(id);
-  res.render('developerGames', { title: gamesByDeveloper[0].developer, games: gamesByDeveloper });
+  res.render('developerGames', { title: `${gamesByDeveloper[0].developer}'s Games`, games: gamesByDeveloper });
 }
 
 async function developersPostDelete(req, res) {
