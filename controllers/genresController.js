@@ -58,8 +58,25 @@ async function genresPostUpdate(req, res) {
   res.redirect('/genres');
 }
 
-async function genresPostDelete(req, res) {
+async function genresGetDelete(req, res) {
   const { id } = req.params;
+  const genres = await getGenreById(id);
+  res.render('deleteEntry', { title: 'Delete Genre', entry: genres[0], requestPath: `/genres/${id}/delete`, backPath: `/genres/${id}` });  
+}
+
+async function genresPostDelete(req, res) {
+  const errors = validationResult(req);
+  const { id } = req.params;
+  if (!errors.isEmpty()) {
+    const genres = await getGenreById(id);
+    return res.status(400).render('deleteEntry', {
+      errors: errors.array(),
+      title: 'Delete Genre',
+      entry: genres[0],
+      requestPath: `/genres/${id}/delete`,
+      backPath: `/genres/${id}`
+    });
+  }
   await deleteGenre(id);
   res.redirect('/genres');
 }
@@ -78,5 +95,6 @@ module.exports = {
   genresPostAdd,
   genresGetUpdate,
   genresPostUpdate,
+  genresGetDelete,
   genresPostDelete
 };

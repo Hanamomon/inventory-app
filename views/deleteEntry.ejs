@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <main class="delete-confirm">
+    <%- include('partials/errors') %>
+    <div>
+      <p>Do you really want to delete '<%= entry.name %>' ?</p>
+    </div>
+    <form method="POST" action="<%= requestPath %>">
+      <div class="password">
+        <label for="password">Password:</label>
+        <input name="password" id="password" type="password" required>
+      </div>
+      <div class="delete-buttons">
+        <button type="submit">Confirm</button>
+        <button><a href="<%= backPath %>">Cancel</a></button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

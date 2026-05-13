@@ -67,8 +67,25 @@ async function gamesPostUpdate(req, res) {
   res.redirect('/games');
 }
 
-async function gamesPostDelete(req, res) {
+async function gamesGetDelete(req, res) {
   const { id } = req.params;
+  const games = await getGameById(id);
+  res.render('deleteEntry', { title: 'Delete Game', entry: games[0], requestPath: `/games/${id}/delete`, backPath: `/games/${id}` });  
+}
+
+async function gamesPostDelete(req, res) {
+  const errors = validationResult(req);
+  const { id } = req.params;
+  if (!errors.isEmpty()) {
+    const games = await getGameById(id);
+    return res.status(400).render('deleteEntry', {
+      errors: errors.array(),
+      title: 'Delete Game',
+      entry: games[0],
+      requestPath: `/games/${id}/delete`,
+      backPath: `/games/${id}`
+    });
+  }
   await deleteGame(id);
   res.redirect('/games');
 }
@@ -80,5 +97,6 @@ module.exports = {
   gamesPostAdd,
   gamesGetUpdate,
   gamesPostUpdate,
+  gamesGetDelete,
   gamesPostDelete
 };

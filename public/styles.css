@@ -117,6 +117,12 @@ input, textarea, select {
   border: 1px solid var(--bar-color);
 }
 
+button {
+    padding: 0.25rem 0.75rem;
+    background-color: var(--button-color);
+    border: 1px solid var(--bar-color);
+}
+
 a, button {
   cursor: pointer;
   text-decoration: none;
@@ -139,9 +145,6 @@ tbody tr:hover {
   button {
     grid-column: 2;
     justify-self: end;
-    padding: 0.25rem 0.75rem;
-    background-color: var(--button-color);
-    border: 1px solid var(--bar-color);
   }
 
   table {
@@ -174,11 +177,6 @@ tbody tr:hover {
   align-items: center;
   h2 {
     flex: 1;
-  }
-  button {
-    padding: 0.25rem 0.75rem;
-    background-color: var(--button-color);
-    border: 1px solid var(--bar-color);
   }
 
   a:hover, button:hover {
@@ -222,9 +220,6 @@ tbody tr:hover {
   display: grid;
   gap: 1rem;
   button {
-    padding: 0.25rem 0.75rem;
-    background-color: var(--button-color);
-    border: 1px solid var(--bar-color);
     a:hover {
       color: var(--hover-text-color);
     }
@@ -258,9 +253,6 @@ tbody tr:hover {
     }
 
     button {
-      padding: 0.25rem 0.75rem;
-      background-color: var(--button-color);
-      border: 1px solid var(--bar-color);
       align-self: flex-end;
     }
 
@@ -324,4 +316,21 @@ tbody tr:hover {
 
 option:checked {
   background-color: var(--main-color);
+}
+
+.delete-confirm {
+  padding-top: 2rem;
+  display: grid;
+  gap: 2rem;
+  justify-items: center;
+  grid-template-columns: minmax(1rem, 1fr) minmax(0, 1200px) minmax(1rem, 1fr);
+
+  & > * {
+    grid-column: 2;
+  }
+
+  form {
+    display: grid;
+    gap: 2rem;
+  }
 }

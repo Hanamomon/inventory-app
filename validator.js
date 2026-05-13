@@ -170,5 +170,6 @@ module.exports = {
   validateAddDeveloper,
   validateUpdateDeveloper,
   validateAddGenre,
-  validateUpdateGenre
+  validateUpdateGenre,
+  validatePassword
 }

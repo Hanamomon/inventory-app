@@ -66,8 +66,25 @@ async function developersGetGames(req, res) {
   res.render('developers/developerGames', { title: `${gamesByDeveloper[0].developer}'s Games`, games: gamesByDeveloper });
 }
 
-async function developersPostDelete(req, res) {
+async function developersGetDelete(req, res) {
   const { id } = req.params;
+  const developers = await getDeveloperById(id);
+  res.render('deleteEntry', { title: 'Delete Developer', entry: developers[0], requestPath: `/developers/${id}/delete`, backPath: `/developers/${id}` });
+}
+
+async function developersPostDelete(req, res) {
+  const errors = validationResult(req);
+  const { id } = req.params;
+  if (!errors.isEmpty()) {
+    const developers = await getDeveloperById(id);
+    return res.status(400).render('deleteEntry', {
+      errors: errors.array(),
+      title: 'Delete Developer',
+      entry: developers[0],
+      requestPath: `/developers/${id}/delete`,
+      backPath: `/developers/${id}`
+    });
+  }
   const developerRelations = await deleteDeveloper(id);
   res.redirect('/developers');
 }
@@ -80,5 +97,6 @@ module.exports = {
   developersPostAdd,
   developersGetUpdate,
   developersPostUpdate,
+  developersGetDelete,
   developersPostDelete
 };
