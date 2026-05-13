@@ -1,6 +1,6 @@
 const { body, param } = require('express-validator');
 const { getGameByName, getGameById, getGenreById, getDeveloperById, getDeveloperByName, getGenreByName } = require('./db/queries');
-const { countriesArray } = require('../countries');
+const { countriesArray } = require('./countries');
 
 const emptyErr = 'must not be empty.';
 const alphannumErr = 'must contain only numbers and letters.';
