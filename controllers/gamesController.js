@@ -1,21 +1,23 @@
-const { getAllGames, getGameById, getAllGenres, getAllDevelopers, postGame, updateGame, deleteGame } = require('../db/queries');
+const { getAllGames, getGameById, postGame, updateGame, deleteGame } = require('../db/gameQueries');
+const { getAllGenres } =require('../db/genreQueries');
+const { getAllDevelopers } = require('../db/developerQueries');
 const { validationResult, matchedData } = require('express-validator');
 
 async function gamesGetAll(req, res) {
   const games = await getAllGames();
-  res.render('games', { games: games });
+  res.render('games/games', { games: games });
 };
 
 async function gamesGetGame(req, res) {
   const { id } = req.params;
   const games = await getGameById(id);
-  res.render('gameInfo', { game: games[0] });
+  res.render('games/gameInfo', { game: games[0] });
 }
 
 async function gamesGetAdd(req, res) {
   const genres = await getAllGenres();
   const developers = await getAllDevelopers();
-  res.render('create/addGame', { genres: genres, developers: developers });
+  res.render('games/addGame', { genres: genres, developers: developers });
 }
 
 async function gamesPostAdd(req, res) {
@@ -24,7 +26,7 @@ async function gamesPostAdd(req, res) {
   if (!errors.isEmpty()) {
     const genres = await getAllGenres();
     const developers = await getAllDevelopers();
-    return res.status(400).render('create/addGame', {
+    return res.status(400).render('games/addGame', {
       errors: errors.array(),
       genres,
       developers
@@ -41,7 +43,7 @@ async function gamesPostAdd(req, res) {
 async function gamesGetUpdate(req, res) {
   const { id } = req.params;
   const results = await Promise.all([getGameById(id), getAllGenres(), getAllDevelopers()]);
-  res.render('update/updateGame', { game: results[0][0], genreList: results[1], developerList: results[2] });
+  res.render('games/updateGame', { game: results[0][0], genreList: results[1], developerList: results[2] });
 }
 
 async function gamesPostUpdate(req, res) {
@@ -50,7 +52,7 @@ async function gamesPostUpdate(req, res) {
   if (!errors.isEmpty()) {
     const { id } = req.params;
     const results = await Promise.all([getGameById(id), getAllGenres(), getAllDevelopers()]);
-    return res.status(400).render('update/updateGame', {
+    return res.status(400).render('games/updateGame', {
       errors: errors.array(),
       game: results[0][0],
       genreList: results[1],

@@ -7,19 +7,19 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <%- include('partials/header') %>
+  <%- include('../partials/header') %>
   <main class="general-info">
     <h2 class="game-by-category-title"><%= title %></h2>
     <table class="game-by-category-list">
       <thead>
         <tr>
           <th>Title</th>
-          <th>Developer</th>
+          <th>Genres</th>
         </tr>
       </thead>
       <tbody>
         <% games.forEach(game => { %>
-          <%- include('partials/gameEntry', { game: game }) %>
+          <%- include('../partials/gameEntry', { game: game }) %>
         <% }) %>
       </tbody>
     </table>
