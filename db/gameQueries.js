@@ -119,10 +119,16 @@ async function getGameByName(name) {
   return rows;
 };
 
+async function getGameByNameExceptId(name, id) {
+  const { rows } = await pool.query(`SELECT * FROM games WHERE name = $1 AND NOT id = $2`, [name, id]);
+  return rows;
+}
+
 module.exports = {
   getAllGames,
   getGameById,
   getGameByName,
+  getGameByNameExceptId,
   postGame,
   updateGame,
   deleteGame,

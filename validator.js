@@ -1,5 +1,7 @@
 const { body, param } = require('express-validator');
-const { getGameByName, getGameById, getGenreById, getDeveloperById, getDeveloperByName, getGenreByName } = require('./db/queries');
+const { getGameByName, getGameById, getGameByNameExceptId } = require('./db/gameQueries');
+const { getGenreById, getGenreByName } = require('./db/genreQueries');
+const { getDeveloperById, getDeveloperByName } = require('./db/developerQueries');
 const { countriesArray } = require('./countries');
 
 const emptyErr = 'must not be empty.';
@@ -53,7 +55,16 @@ const validateUpdateGame = [
         throw new Error('Game with the specified id doesn\'t exit.');
       }
     }),
-  validateAddGame
+  body('name').trim()
+    .notEmpty().withMessage(`Game name ${emptyErr}`).bail()
+    .matches(/^[\p{L}0-9\s'-]+$/u).withMessage(`Game title ${alphannumErr}`).bail()
+    .custom(async (value, { req }) => {
+      const existingGameExceptToUpdate = await getGameByNameExceptId(value, req.params.id);
+      if (existingGameExceptToUpdate.length !== 0 ) {
+        throw new Error('A game with this title exists already.');
+      }
+    }).bail(),
+  validateAddGame.slice(1)
 ]
 
 const validateAddDeveloper = [
