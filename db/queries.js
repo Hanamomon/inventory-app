@@ -253,6 +253,16 @@ async function getGameByName(name) {
   return rows;
 }
 
+async function getDeveloperByName(name) {
+  const { rows } = await pool.query(`SELECT * FROM developers WHERE name = $1`, [name]);
+  return rows;
+}
+
+async function getGenreByName(name) {
+  const { rows } = await pool.query(`SELECT * FROM genre WHERE name = $1`, [name]);
+  return rows;
+}
+
 module.exports = {
   getAllGames,
   getGameById,
@@ -261,8 +271,10 @@ module.exports = {
   getGameByName,
   getAllGenres,
   getGenreById,
+  getGenreByName,
   getAllDevelopers,
   getDeveloperById,
+  getDeveloperByName,
   postGame,
   postGenre,
   postDeveloper,

@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const gamesRouter = Router();
 const gamesController = require('../controllers/gamesController');
-
-const { body, param } = require('express-validator');
 const { validateAddGame, validateUpdateGame } = require('../validator'); 
 
 gamesRouter.get('/', gamesController.gamesGetAll);
