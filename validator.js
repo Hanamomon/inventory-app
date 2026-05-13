@@ -1,4 +1,7 @@
 const { body, param } = require('express-validator');
+require('dotenv').config();
+const { MASTER_PASSWORD } = process.env;
+
 const { getGameByName, getGameById, getGameByNameExceptId } = require('./db/gameQueries');
 const { getGenreById, getGenreByName, getGenreByNameExceptId } = require('./db/genreQueries');
 const { getDeveloperById, getDeveloperByName, getDeveloperByNameExceptId } = require('./db/developerQueries');
@@ -11,6 +14,21 @@ const intErr = 'must be an integer.';
 
 const countryErr = 'Developer country must be a valid country.';
 const dateErr = 'Founded date must be valid.';
+
+const passErr = 'Password is incorrect.';
+
+const validatePassword = [
+  body('password')
+    .notEmpty().withMessage('Enter the password.').bail()
+    .custom(value => {
+      console.log(value);
+      console.log(MASTER_PASSWORD)
+      if (value !== MASTER_PASSWORD) {
+        throw new Error('Enter the correct password.');
+      }
+      return true;
+    }).bail({ level: 'request' }),
+]
 
 const validateAddGame = [
   body('name').trim()
@@ -47,6 +65,7 @@ const validateAddGame = [
 ]
 
 const validateUpdateGame = [
+  validatePassword,
   param('id').trim()
     .isInt().withMessage(`Game id ${intErr}`).bail()
     .custom(async value => {
@@ -91,6 +110,7 @@ const validateAddDeveloper = [
     .isDate().withMessage(dateErr),
 ]
 const validateUpdateDeveloper = [
+  validatePassword,
   param('id').trim()
     .isInt().withMessage(`Developer id ${intErr}`).bail()
     .custom(async value => {
@@ -126,6 +146,7 @@ const validateAddGenre = [
     .matches(/^[\p{L}0-9\s'-]+$/u).withMessage(`Genre description ${alphannumErr}`),
 ]
 const validateUpdateGenre = [
+  validatePassword,
   param('id').trim()
     .isInt().withMessage(`Genre id ${intErr}`).bail()
     .custom(async value => {

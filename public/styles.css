@@ -54,6 +54,10 @@ h1, h2, h3, h4, h5, h6 {
     sans-serif;
 }
 
+textarea {
+  resize: none;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;
@@ -103,8 +107,14 @@ body {
   background-color: var(--main-color); 
 }
 
-p, th {
+p, label, input, th, textarea, label, select, option {
   color: var(--text-color);
+}
+
+input, textarea, select {
+  padding: 0.5rem;
+  background-color: var(--button-color);
+  border: 1px solid var(--bar-color);
 }
 
 a, button {
@@ -241,18 +251,10 @@ tbody tr:hover {
     flex-direction: column;
     gap: 1rem;
 
-    input, textarea, label, select, option {
-      color: var(--text-color);
-    }
     div {
       display: grid;
       grid-template-columns: 150px 1fr;
       align-items: center;
-    }
-    input, textarea, select {
-      padding: 0.5rem;
-      background-color: var(--button-color);
-      border: 1px solid var(--bar-color);
     }
 
     button {
