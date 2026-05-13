@@ -21,8 +21,6 @@ const validatePassword = [
   body('password')
     .notEmpty().withMessage('Enter the password.').bail()
     .custom(value => {
-      console.log(value);
-      console.log(MASTER_PASSWORD)
       if (value !== MASTER_PASSWORD) {
         throw new Error('Enter the correct password.');
       }
