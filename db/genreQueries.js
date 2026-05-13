@@ -66,7 +66,7 @@ async function deleteGenre(id) {
 }
 
 async function getGenreByName(name) {
-  const { rows } = await pool.query(`SELECT * FROM genre WHERE name = $1`, [name]);
+  const { rows } = await pool.query(`SELECT * FROM genres WHERE name = $1`, [name]);
   return rows;
 }
 

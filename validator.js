@@ -109,20 +109,20 @@ const validateAddGenre = [
       if (existingGenre.length !== 0) {
         throw new Error('A genre with this name already exists.');
       }
-    }),
+    }).bail({ level: 'request' }),
   body('description').trim()
     .notEmpty().withMessage(`Genre description ${emptyErr}`).bail()
     .matches(/^[\p{L}0-9\s'-]+$/u).withMessage(`Genre description ${alphannumErr}`),
 ]
 const validateUpdateGenre = [
   param('id').trim()
-    .isInt().withMessage(`Developer id ${intErr}`).bail()
+    .isInt().withMessage(`Genre id ${intErr}`).bail()
     .custom(async value => {
       const existingGenre = await getGenreById(value);
       if (existingGenre.length === 0) {
         throw new Error('Genre with the specified id doesn\'t exit.');
       }
-    }).bail(),
+    }).bail({ level: 'request' }),
   validateAddGenre
 ]
 
