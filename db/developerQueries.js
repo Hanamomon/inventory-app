@@ -74,11 +74,17 @@ async function getDeveloperByName(name) {
   return rows;
 }
 
+async function getDeveloperByNameExceptId(name, id) {
+  const { rows } = await pool.query(`SELECT * FROM developers WHERE name = $1 AND NOT id = $2`, [name, id]);
+  return rows;
+}
+
 module.exports = {
   getGamesByDeveloper,
   getAllDevelopers,
   getDeveloperById,
   getDeveloperByName,
+  getDeveloperByNameExceptId,
   postDeveloper,
   updateDeveloper,
   deleteDeveloper,

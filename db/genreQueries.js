@@ -70,11 +70,17 @@ async function getGenreByName(name) {
   return rows;
 }
 
+async function getGenreByNameExceptId(name, id) {
+  const { rows } = await pool.query(`SELECT * FROM genres WHERE name = $1 AND NOT id = $2`, [name, id]);
+  return rows;
+}
+
 module.exports = {
   getGamesByGenre,
   getAllGenres,
   getGenreById,
   getGenreByName,
+  getGenreByNameExceptId,
   postGenre,
   updateGenre,
   deleteGenre

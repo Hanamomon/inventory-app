@@ -1,7 +1,7 @@
 const { body, param } = require('express-validator');
 const { getGameByName, getGameById, getGameByNameExceptId } = require('./db/gameQueries');
-const { getGenreById, getGenreByName } = require('./db/genreQueries');
-const { getDeveloperById, getDeveloperByName } = require('./db/developerQueries');
+const { getGenreById, getGenreByName, getGenreByNameExceptId } = require('./db/genreQueries');
+const { getDeveloperById, getDeveloperByName, getDeveloperByNameExceptId } = require('./db/developerQueries');
 const { countriesArray } = require('./countries');
 
 const emptyErr = 'must not be empty.';
@@ -73,18 +73,20 @@ const validateAddDeveloper = [
     .matches(/^[\p{L}0-9\s'-]+$/u).withMessage(`Developer name ${alphannumErr}`).bail()
     .custom(async value => {
       const existingDeveloper = await getDeveloperByName(value);
+      console.log(existingDeveloper)
       if (existingDeveloper.length !== 0 ) {
         throw new Error('A developer with that name already exists.')
       }
-    }),
+    }).bail({ level: 'request' }),
   body('description').trim()
     .notEmpty().withMessage(`Developer description ${emptyErr}`).bail()
-    .matches(/^[\p{L}0-9\s'-]+$/u).withMessage(`Develoepr description ${alphannumErr}`).bail(),
+    .matches(/^[\p{L}0-9\s'-]+$/u).withMessage(`Develoepr description ${alphannumErr}`).bail({ level: 'request' }),
   body('country').trim()
     .custom(value => {
       if (!countriesArray.some(countryPair => countryPair[0] === value))
         throw new Error(countryErr);
-    }).bail(),
+      return true;
+    }).bail({ level: 'request' }),
   body('founded').trim()
     .isDate().withMessage(dateErr),
 ]
@@ -96,8 +98,17 @@ const validateUpdateDeveloper = [
       if (existingDeveloper.length === 0) {
         throw new Error('Developer with the specified id doesn\'t exit.');
       }
-    }).bail(),
-  validateAddDeveloper
+    }).bail({ level: 'request' }),
+  body('name').trim()
+    .notEmpty().withMessage(`Developer name ${emptyErr}`).bail()
+    .matches(/^[\p{L}0-9\s'-]+$/u).withMessage(`Developer name ${alphannumErr}`).bail()
+    .custom(async (value, { req }) => {
+      const existingDveloperExceptToUpdate = await getDeveloperByNameExceptId(value, req.params.id);
+      if (existingDveloperExceptToUpdate.length !== 0 ) {
+        throw new Error('A developer with that name already exists.')
+      }
+    }).bail({ level: 'request' }),  
+  validateAddDeveloper.slice(1)
 ]
 
 const validateAddGenre = [
@@ -123,7 +134,16 @@ const validateUpdateGenre = [
         throw new Error('Genre with the specified id doesn\'t exit.');
       }
     }).bail({ level: 'request' }),
-  validateAddGenre
+  body('name').trim()
+    .notEmpty().withMessage(`Genre name ${emptyErr}`).bail()
+    .matches(/^[\p{L}0-9\s'-]+$/u).withMessage(`Genre name ${alphannumErr}`).bail()
+    .custom(async (value, { req }) => {
+      const existingGenreExceptToUpdate = await getGenreByNameExceptId(value, req.params.id);
+      if (existingGenreExceptToUpdate.length !== 0) {
+        throw new Error('A genre with this name already exists.');
+      }
+    }).bail({ level: 'request' }),
+  validateAddGenre.slice(1)
 ]
 
 module.exports = {
