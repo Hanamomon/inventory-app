@@ -311,3 +311,7 @@ tbody tr:hover {
     list-style: none;
   }
 }
+
+option:checked {
+  background-color: var(--main-color);
+}
