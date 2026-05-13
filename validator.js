@@ -1,5 +1,4 @@
 const { body, param } = require('express-validator');
-require('dotenv').config();
 const { MASTER_PASSWORD } = process.env;
 
 const { getGameByName, getGameById, getGameByNameExceptId } = require('./db/gameQueries');
@@ -21,6 +20,7 @@ const validatePassword = [
   body('password')
     .notEmpty().withMessage('Enter the password.').bail()
     .custom(value => {
+      console.log(MASTER_PASSWORD)
       if (value !== MASTER_PASSWORD) {
         throw new Error('Enter the correct password.');
       }
