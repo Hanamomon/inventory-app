@@ -20,7 +20,11 @@
         <p><%= genre.description %></p>
       </div>
       <div>
-        <button><a href="/genres/<%= genre.id %>/games">View <%= genre.game_count %> <%= genre.name %> Game<%= (genre.game_count === '1') ? '' : 's' %></a></button>
+        <% if (genre.game_count != 0) { %>
+          <button><a href="/genres/<%= genre.id %>/games">View <%= genre.game_count %> <%= genre.name %> Game<%= (genre.game_count === '1') ? '' : 's' %></a></button>
+        <% } else { %>
+          <p>This developer has no games yet.</p>
+        <% } %>
       </div>
     </div>
   </main>

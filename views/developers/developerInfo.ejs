@@ -28,7 +28,11 @@
         <p><%= developer.country %></p>
       </div>
       <div>
-        <button><a href="/developers/<%= developer.id %>/games">View <%= developer.name %>'s <%= developer.developed_count %> Game<%= (developer.developed_count === '1') ? '' : 's' %></a></button>
+        <% if (developer.developed_count != 0) { %>
+          <button><a href="/developers/<%= developer.id %>/games">View <%= developer.name %>'s <%= developer.developed_count %> Game<%= (developer.developed_count === '1') ? '' : 's' %></a></button>
+        <% } else { %>
+          <p>This developer has no games yet.</p>
+        <% } %>
       </div>
     </div>
   </main>
