@@ -10,7 +10,8 @@ async function developersGetAll(req, res) {
 async function developersGetDeveloper(req, res) {
   const { id } = req.params;
   const developers = await getDeveloperById(id);
-  res.render('developers/developerInfo', { developer: developers[0] });
+  const developer = {...developers[0], founded: developers[0].founded.toDateString() };
+  res.render('developers/developerInfo', { developer });
 }
 
 async function developersGetAdd(req, res) {
